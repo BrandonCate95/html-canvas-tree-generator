@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+	  canvas{
+		border: 1px solid black;
+	  }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="578" height="600"></canvas>
+    <script>
+      function drawBranches(startX, startY, trunkWidth, level, maxLevel) {
+        canvas = document.getElementById('myCanvas');
+        context = canvas.getContext('2d');
+        if(level < maxLevel) {
+		
+			//if(level == maxLevel - 1){
+			//	context.beginPath();
+			//	ctx.arc(0,0,10,0,2*Math.PI);
+			//	ctx.stroke();
+			//}
+
+		  console.log(level);
+		
+          var changeX = 100 / (level + 1);
+          var changeY = 200 / (level + 1);
+
+          var topRightX = startX + Math.random() * changeX;
+          var topRightY = startY - Math.random() * changeY;
+
+          var topLeftX = startX - Math.random() * changeX;
+          var topLeftY = startY - Math.random() * changeY;
+
+          // draw right branch
+          context.beginPath();
+          context.moveTo(startX + trunkWidth / 4, startY);
+          context.quadraticCurveTo(startX + trunkWidth / 4, startY - trunkWidth, topRightX, topRightY);
+          context.lineWidth = trunkWidth;
+          context.lineCap = 'round';
+          context.stroke();
+
+          // draw left branch
+          context.beginPath();
+          context.moveTo(startX - trunkWidth / 4, startY);
+          context.quadraticCurveTo(startX - trunkWidth / 4, startY - trunkWidth, topLeftX, topLeftY);
+          context.lineWidth = trunkWidth;
+          context.lineCap = 'round';
+          context.stroke();
+
+          drawBranches(topRightX, topRightY, trunkWidth * 0.7, level + 1, maxLevel);
+          drawBranches(topLeftX, topLeftY, trunkWidth * 0.7, level + 1, maxLevel);
+        }
+      }
+      canvas = document.getElementById('myCanvas');
+      context = canvas.getContext('2d');
+      drawBranches(canvas.width / 2, canvas.height, 40, 0, 12);
+
+    </script>
+  </body>
+</html>
+      
